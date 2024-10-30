@@ -6,8 +6,10 @@ const program = new Command();
 
 program
   .name("gendiff") // Nombre de tu CLI
+  .arguments("<filepatch1>, <filepatch1>")
   .description("Compares two configuration files and shows a difference")
-  .version("1.0.0"); // Definición de la versión de tu CLI
+  .version("1.0.0") // Definición de la versión de tu CLI
+  .option("-f, --format [type]", "output format");
 
 // Opción de ayuda ya es manejada automáticamente por commander
 
