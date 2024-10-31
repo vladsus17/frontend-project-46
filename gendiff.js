@@ -1,34 +1,40 @@
 #!/usr/bin/env node
 
 import { Command } from "commander";
+import fs from "fs";
+import path from "path";
 
 const program = new Command();
 
 program
-  .name("gendiff") // Nombre de tu CLI
-  .arguments("<filepatch1>, <filepatch1>")
+  .name("gendiff")
+  .arguments("<filepath1> <filepath2>")
   .description("Compares two configuration files and shows a difference")
-  .version("1.0.0") // Definición de la versión de tu CLI
-  .option("-f, --format [type]", "output format");
+  .version("1.0.0")
+  .option("-f, --format [type]", "output format")
+  .action((filepath1, filepath2) => {
+    try {
+      const data1 = readFile(filepath1);
+      const data2 = readFile(filepath2);
 
-// Opción de ayuda ya es manejada automáticamente por commander
+      console.log("File 1 data:", data1);
+      console.log("File 2 data:", data2);
+    } catch (error) {
+      console.error(`Error reading files: ${error.message}`);
+    }
+  });
 
+// Обработка опций
 program.parse(process.argv);
 
-// Opciones seleccionadas
-const options = program.opts();
-
-// Si deseas mostrar la ayuda si se solicita
-if (options.help) {
-  program.outputHelp(); // Muestra la ayuda si se solicita
-}
-
-// Si deseas manejar la opción de versión, esto ya está manejado por commander
-if (options.version) {
-  console.log("1.0.0"); // Muestra la versión si se solicita
-}
-
-// Si no hay ninguna opción especificada, podrías mostrar un mensaje o simplemente no hacer nada
+// Если не переданы аргументы, показываем помощь
 if (!process.argv.slice(2).length) {
-  program.outputHelp(); // Muestra la ayuda por defecto si no hay argumentos
+  program.outputHelp(); // Показывает помощь по умолчанию
+}
+
+// Функция для чтения файла
+function readFile(filepath) {
+  const absolutePath = path.resolve(process.cwd(), filepath);
+  const content = fs.readFileSync(absolutePath, "utf-8");
+  return JSON.parse(content);
 }
