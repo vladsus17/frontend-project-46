@@ -7,8 +7,8 @@
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "bin": {
-    "gendiff": "./gendiff.js"
-  },
+  "gendiff": "./gendiff.js"
+},
   "repository": {
     "type": "git",
     "url": "git+https://github.com/vladsus17/frontend-project-46.git"
@@ -26,6 +26,7 @@
   "homepage": "https://github.com/vladsus17/frontend-project-46#readme",
   "type": "module",
   "dependencies": {
-    "commander": "^12.1.0"
+    "commander": "^12.1.0",
+    "lodash": "^4.17.21"
   }
 }
