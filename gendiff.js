@@ -1,18 +1,18 @@
 #!/usr/bin/env node
 
-import { Command } from "commander";
-import fs from "fs";
-import path from "path";
+import { Command } from 'commander';
+import fs from 'fs';
+import path from 'path';
 import _ from 'lodash';
 
 const program = new Command();
 
 program
-  .name("gendiff")
-  .arguments("<filepath1> <filepath2>")
-  .description("Compares two configuration files and shows a difference")
-  .version("1.0.0")
-  .option("-f, --format [type]", "output format", "plain")
+  .name('gendiff')
+  .arguments('<filepath1> <filepath2>')
+  .description('Compares two configuration files and shows a difference')
+  .version('1.0.0')
+  .option('-f, --format [type]', 'output format', 'plain')
   .action((filepath1, filepath2) => {
     try {
       const data1 = readFile(filepath1);
@@ -41,7 +41,7 @@ function readFile(filepath) {
     throw new Error(`File not found: ${absolutePath}`);
   }
   try {
-    const content = fs.readFileSync(absolutePath, "utf-8");
+    const content = fs.readFileSync(absolutePath, 'utf-8');
     return JSON.parse(content);
   } catch (error) {
     throw new Error(`Invalid JSON format in file: ${absolutePath}`);
@@ -61,12 +61,12 @@ function genDiff(data1, data2) {
   const result = [];
 
   // Agregar claves únicas de data1 con "-"
-  uniqKeys1.forEach(key => {
+  uniqKeys1.forEach((key) => {
     result.push(`- ${key}: ${data1[key]}`);
   });
 
   // Agregar claves comunes con valores diferentes
-  commonKeys.forEach(key => {
+  commonKeys.forEach((key) => {
     if (data1[key] !== data2[key]) {
       result.push(`- ${key}: ${data1[key]}`);
       result.push(`+ ${key}: ${data2[key]}`);
@@ -74,25 +74,24 @@ function genDiff(data1, data2) {
   });
 
   // Agregar claves comunes con valores iguales
-  commonKeys.forEach(key => {
+  commonKeys.forEach((key) => {
     if (data1[key] === data2[key]) {
       result.push(`  ${key}: ${data1[key]}`);
     }
   });
 
   // Agregar claves únicas de data2 con "+"
-  uniqKeys2.forEach(key => {
+  uniqKeys2.forEach((key) => {
     result.push(`+ ${key}: ${data2[key]}`);
   });
 
   // Ordenar el resultado alfabéticamente ignorando el primer carácter
   const sortedResult = result.sort((a, b) => {
-  const keyA = a.slice(2); // Elimina el prefijo "+ " o "- "
-  const keyB = b.slice(2); // Elimina el prefijo "+ " o "- "
-  return keyA.localeCompare(keyB);
-});
+    const keyA = a.slice(2); // Elimina el prefijo "+ " o "- "
+    const keyB = b.slice(2); // Elimina el prefijo "+ " o "- "
+    return keyA.localeCompare(keyB);
+  });
 
-// Formatear la salida final
-return `{\n  ${sortedResult.join('\n  ')}\n}`;
-
-};
+  // Formatear la salida final
+  return `{\n  ${sortedResult.join('\n  ')}\n}`;
+}
