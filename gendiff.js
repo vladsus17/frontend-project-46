@@ -1,9 +1,9 @@
 #!/usr/bin/env node
 
-import { Command } from "commander";
-import fs from "fs";
-import path from "path";
-import _ from "lodash";
+import { Command } from 'commander';
+import fs from 'fs';
+import path from 'path';
+import _ from 'lodash';
 
 // Función para leer archivos JSON
 const readFile = (filepath) => {
@@ -12,7 +12,7 @@ const readFile = (filepath) => {
     throw new Error(`File not found: ${absolutePath}`);
   }
   try {
-    const content = fs.readFileSync(absolutePath, "utf-8");
+    const content = fs.readFileSync(absolutePath, 'utf-8');
     return JSON.parse(content);
   } catch (error) {
     throw new Error(`Invalid JSON format in file: ${absolutePath}`);
@@ -20,7 +20,7 @@ const readFile = (filepath) => {
 };
 
 // Función para generar las diferencias
-export const genDiff = (data1, data2) => {
+const genDiff = (data1, data2) => {
   const keys1 = Object.keys(data1);
   const keys2 = Object.keys(data2);
 
@@ -57,18 +57,18 @@ export const genDiff = (data1, data2) => {
     return keyA.localeCompare(keyB);
   });
 
-  return `{\n  ${sortedResult.join("\n  ")}\n}`;
+  return `{\n  ${sortedResult.join('\n  ')}\n}`;
 };
 
 // Configurar el comando CLI
 const program = new Command();
 
 program
-  .name("gendiff")
-  .arguments("<filepath1> <filepath2>")
-  .description("Compares two configuration files and shows a difference")
-  .version("1.0.0")
-  .option("-f, --format [type]", "output format", "plain")
+  .name('gendiff')
+  .arguments('<filepath1> <filepath2>')
+  .description('Compares two configuration files and shows a difference')
+  .version('1.0.0')
+  .option('-f, --format [type]', 'output format', 'plain')
   .action((filepath1, filepath2) => {
     try {
       const data1 = readFile(filepath1);
@@ -83,11 +83,13 @@ program
   });
 
 // Procesar opciones
-if (process.env.NODE_ENV !== "test") {
+if (process.env.NODE_ENV !== 'test') {
   program.parse(process.argv);
 }
 
 // Si no se pasan argumentos, muestra la ayuda
-if (!process.argv.slice(2).length && process.env.NODE_ENV !== "test") {
+if (!process.argv.slice(2).length && process.env.NODE_ENV !== 'test') {
   program.outputHelp();
 }
+
+export default genDiff;
