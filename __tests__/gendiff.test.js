@@ -1,5 +1,5 @@
-import fs from 'fs';
-import genDiff from '../gendiff.js';
+const fs = require('fs');
+const genDiff = require('../gendiff.cjs');
 
 test('gendiff should compare two JSON objects and produce the correct output', () => {
   const dataFilePath = '/home/vladsus/frontend-project-46/__fixtures__/data.json';

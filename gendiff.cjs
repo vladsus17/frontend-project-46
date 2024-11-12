@@ -1,9 +1,9 @@
 #!/usr/bin/env node
 
-import { Command } from 'commander';
-import fs from 'fs';
-import path from 'path';
-import _ from 'lodash';
+const { Command } = require('commander');
+const fs = require('fs');
+const path = require('path');
+const _ = require('lodash');
 
 // Función para leer archivos JSON
 const readFile = (filepath) => {
@@ -92,4 +92,4 @@ if (!process.argv.slice(2).length && process.env.NODE_ENV !== 'test') {
   program.outputHelp();
 }
 
-export default genDiff;
+module.exports = genDiff;

@@ -4,10 +4,10 @@
   "description": "[![Actions Status](https://github.com/vladsus17/frontend-project-46/actions/workflows/hexlet-check.yml/badge.svg)](https://github.com/vladsus17/frontend-project-46/actions)",
   "main": "gendiff.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "jest"
   },
   "bin": {
-    "gendiff": "./gendiff.js"
+    "gendiff": "./gendiff.cjs"
   },
   "repository": {
     "type": "git",
